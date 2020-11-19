@@ -1,0 +1,53 @@
+GRAMÁTICA CSS:
+
+	programa : bloque +
+	
+	bloque : nombre LLAVE_APERTURA regla * LLAVE_CIERRE
+	
+	nombre : H1 | H2 | P
+	
+	regla : clave DOS_PUNTOS valor PUNTO_COMA
+	
+	clave : COLOR | FONT_SIZE | TEXT_ALIGN | FONT_STYLE
+	
+	valor : color | size | aligment | fstyle
+	
+	color : BLACK | WHITE | YELLOW | RED | BLUE | GREEN
+	
+	size : SIZE PIXEL
+	
+	aligment : LEFT | RIGHT | CENTER
+	
+	fstyle : BOLD | NORMAL | UNDERLINE | ITALIC 
+	
+	LLAVE_APERTURA : '{'
+	LLAVE_CIERRE : '}'
+	DOS_PUNTOS : ':'
+	PUNTO_COMA : ';'
+	H1 : 'h1'
+	H2 : 'h2'
+	P : 'p'
+	COLOR : 'color'
+	FONT_SIZE : 'font-size'
+	TEXT_ALIGN : 'text-align'
+	FONT_STYLE : 'font-style'
+	BLACK : 'black'
+	WHITE : 'white'
+	BLUE : 'blue'
+	GREEN : 'green'
+	YELLOW : 'yellow'
+	RED : 'red'
+	PIXEL : 'px'
+	LEFT : 'left'
+	RIGHT : 'right'
+	CENTER : 'center'
+	BOLD : 'bold'
+	NORMAL : 'normal'
+	UNDERLINE : 'underline'
+	ITALIC : 'italic'
+	SIZE : [0-9]+
+	
+	
+	
+	
+	

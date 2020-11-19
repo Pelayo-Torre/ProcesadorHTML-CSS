@@ -1,0 +1,32 @@
+package simpleCss.parser;
+
+public enum TokensId {
+	// Lista de tokens
+	LLAVE_APERTURA,
+	LLAVE_CIERRE,
+	DOS_PUNTOS,
+	PUNTO_COMA,
+	P,
+	H1,
+	H2,
+	COLOR,
+	FONT_SIZE,
+	TEXT_ALIGN,
+	FONT_STYLE,
+	BLACK,
+	BLUE,
+	GREEN,
+	WHITE,
+	YELLOW,
+	RED,
+	PIXEL,
+	LEFT,
+	RIGHT,
+	CENTER,
+	BOLD,
+	NORMAL,
+	UNDERLINE,
+	ITALIC,
+	SIZE,
+	EOF
+}

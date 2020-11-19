@@ -1,0 +1,59 @@
+GRAMÁTICA HTML:
+
+	estructura : HTML head body HTMLFIN
+	
+	head : HEAD etiquetasHead + HEADFIN
+	
+	etiquetasHead : TITLE texto TITLEFIN | link*
+	
+	texto : palabra *
+	
+	palabra : [a-zA-Z0-1.,;/]+
+	
+	link : LINK atributosLink+ MAYOR
+	
+	atributosLink : href | rel | type
+	
+	href : HREF palabra
+	
+	rel : REL palabra
+	
+	type : TYPE palabra
+	
+	body : BODY etiqueta* BODYFIN
+	
+	etiqueta : cabecera1 | cabecera2 | parrafo
+	
+	cabecera1 : H1 texto H1FIN
+	
+	cabecera2 : H2 texto H2FIN
+	
+	parrafo : P texto PFIN
+			
+	HTML : '<html>'
+	HTMLFIN : '</html>'
+	HEAD : '<head>'
+	HEADFIN : '</head>'
+	TITLE : '<title>'
+	TITLEFIN : '</title>'
+	LINK : '<link'
+	HREF : 'href='
+	REL : 'rel='
+	TYPE : 'type='
+	BODY : '<body>'
+	BODYFIN : '</body>'
+	H1 : '<h1>'
+	H1FIN : '</h1>'
+	H2 : '<h2>'
+	H2FIN : '</h2>'
+	P : '<p>'
+	PFIN : '</p>'
+	MAYOR : '>'
+	NEGRITA : '<b>'
+	NEGRITAFIN : '</b>'
+	CURSIVA : '<i>'
+	CURSIVAFIN : '</i>'
+	UNDERLINE : '<u>'
+	UNDERLINEFIN : '</u>'
+	
+	

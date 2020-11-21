@@ -6,13 +6,13 @@ h1 {
 }
  
 h2 {
-  color: blue;
+  color: red;
   font-size: 18px;
   font-style: italic;
 }
  
 p {
   color: green;
-  text-align: left;
+  text-align: center;
   font-style: normal;
 }

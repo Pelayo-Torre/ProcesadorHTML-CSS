@@ -7,13 +7,14 @@ import java.io.*;
 public class Lexicon {
 
 	// Gestión de tokens
-	List<Token> tokens = new ArrayList<Token>();
-	int i = 0; //Último token entregado en getToken()
+	private List<Token> tokens = new ArrayList<Token>();
+	private int i = 0; //Último token entregado en getToken()
 	//Gestión de lectura del fichero
-	FileReader filereader;
-	boolean charBuffUsed = false;
-	char charBuff;
-	int line = 1; // indica la línea del fichero fuente
+	private FileReader filereader;
+	private boolean charBuffUsed = false;
+	private char charBuff;
+	private int line = 1; // indica la línea del fichero fuente
+	private boolean hayErrores = false;
 	
 	HashSet<Character> charText = new HashSet<Character>();
 	
@@ -97,7 +98,7 @@ public class Lexicon {
 								case "green" :
 									tokens.add(new Token(TokensId.GREEN, ident, line));
 									break;
-								case "pixel" :
+								case "px" :
 									tokens.add(new Token(TokensId.PIXEL, ident, line));
 									break;
 								case "left" :
@@ -144,6 +145,11 @@ public class Lexicon {
 	// Devolver el último token
 	public void returnLastToken () {
 		i--;
+	}
+	
+	// reset
+	public void reset () {
+		this.i = 0;
 	}
 
 	// Get Token
@@ -231,5 +237,10 @@ public class Lexicon {
 	// Error léxico
 	void errorLexico (String e) {
 		System.out.println("Error léxico en : "+e);
+		hayErrores = true;
+	}
+	
+	public boolean hayErrores() {
+		return hayErrores;
 	}
 }

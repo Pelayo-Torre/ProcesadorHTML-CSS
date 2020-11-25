@@ -7,13 +7,14 @@ import java.io.*;
 public class Lexicon {
 
 	// Gestión de tokens
-	List<Token> tokens = new ArrayList<Token>();
-	int i = 0; //Último token entregado en getToken()
+	private List<Token> tokens = new ArrayList<Token>();
+	private int i = 0; //Último token entregado en getToken()
 	//Gestión de lectura del fichero
-	FileReader filereader;
-	boolean charBuffUsed = false;
-	char charBuff;
-	int line = 1; // indica la línea del fichero fuente
+	private FileReader filereader;
+	private boolean charBuffUsed = false;
+	private char charBuff;
+	private int line = 1; // indica la línea del fichero fuente
+	private boolean hayErrores = false;
 	
 	HashSet<Character> charText = new HashSet<Character>();
 	
@@ -38,18 +39,53 @@ public class Lexicon {
 						case 'h':
 							lex = getLexeme ("</h",'>');
 							if (lex.equals("</html>"))
-								tokens.add(new Token(TokensId.HTMLCLOSE, lex, line));
+								tokens.add(new Token(TokensId.HTMLFIN, lex, line));
 							else if (lex.equals("</head>"))
-								tokens.add(new Token(TokensId.HEADC, lex, line));
+								tokens.add(new Token(TokensId.HEADFIN, lex, line));
 							else if (lex.equals("</h1>"))
-								tokens.add(new Token(TokensId.H1C, lex, line));
+								tokens.add(new Token(TokensId.H1FIN, lex, line));
 							else if (lex.equals("</h2>"))
-								tokens.add(new Token(TokensId.H2C, lex, line));
+								tokens.add(new Token(TokensId.H2FIN, lex, line));
 							else
 								errorLexico(lex);
 							break;
-							// Resto de etiquetas de cierre
-							//...
+						case 'p':
+							lex = getLexeme ("</p",'>');
+							if (lex.equals("</p>"))
+								tokens.add(new Token(TokensId.PFIN, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 't':
+							lex = getLexeme ("</t",'>');
+							if (lex.equals("</title>"))
+								tokens.add(new Token(TokensId.TITLEFIN, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 'b':
+							lex = getLexeme ("</b",'>');
+							if (lex.equals("</body>"))
+								tokens.add(new Token(TokensId.BODYFIN, lex, line));
+							else if (lex.equals("</b>"))
+								tokens.add(new Token(TokensId.NEGRITAFIN, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 'i':
+							lex = getLexeme ("</i",'>');
+							if (lex.equals("</i>"))
+								tokens.add(new Token(TokensId.CURSIVAFIN, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 'u':
+							lex = getLexeme ("</u",'>');
+							if (lex.equals("</u>"))
+								tokens.add(new Token(TokensId.UNDERLINEFIN, lex, line));
+							else
+								errorLexico(lex);
+							break;
 						default:
 							errorLexico(getLexeme("<"+valor, '>'));
 						}
@@ -63,8 +99,56 @@ public class Lexicon {
 							else
 								errorLexico(lex);
 							break;
-							// Resto de etiquetas de apertura
-							//...
+						case 'h':
+							lex = getLexeme ("<h",'>');
+							if (lex.equals("<html>"))
+								tokens.add(new Token(TokensId.HTML, lex, line));
+							else if (lex.equals("<head>"))
+								tokens.add(new Token(TokensId.HEAD, lex, line));
+							else if (lex.equals("<h1>"))
+								tokens.add(new Token(TokensId.H1, lex, line));
+							else if (lex.equals("<h2>"))
+								tokens.add(new Token(TokensId.H2, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 'p':
+							lex = getLexeme ("<p",'>');
+							if (lex.equals("<p>"))
+								tokens.add(new Token(TokensId.P, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 't':
+							lex = getLexeme ("<t",'>');
+							if (lex.equals("<title>"))
+								tokens.add(new Token(TokensId.TITLE, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 'b':
+							lex = getLexeme ("<b",'>');
+							if (lex.equals("<body>"))
+								tokens.add(new Token(TokensId.BODY, lex, line));
+							else if (lex.equals("<b>"))
+								tokens.add(new Token(TokensId.NEGRITA, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 'i':
+							lex = getLexeme ("<i",'>');
+							if (lex.equals("<i>"))
+								tokens.add(new Token(TokensId.CURSIVA, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 'u':
+							lex = getLexeme ("<u",'>');
+							if (lex.equals("<u>"))
+								tokens.add(new Token(TokensId.UNDERLINE, lex, line));
+							else
+								errorLexico(lex);
+							break;
 						default:
 							errorLexico(getLexeme("<"+valor, '>'));
 						
@@ -72,10 +156,16 @@ public class Lexicon {
 					}
 					break;
 				case '>':
-						tokens.add(new Token(TokensId.CLOSE, new String(">"), line));
+						tokens.add(new Token(TokensId.MAYOR, new String(">"), line));
 					break;
-					// Resto de token de un solo caracter
-					//...
+				case '=':
+						tokens.add(new Token(TokensId.IGUAL, new String("="), line));
+					break;
+				case '"':
+					String cadena = getLexeme("", '"');
+					cadena = cadena.substring(0, cadena.length() -1);
+					tokens.add(new Token(TokensId.CADENA, cadena, line));
+					break;
 				case '\n':
 					line++;
 				case '\r':
@@ -87,8 +177,20 @@ public class Lexicon {
 				default:
 					//Texto
 					lex = getLexemeTEXT(new String(""+(char)valor));
-					tokens.add(new Token(TokensId.TEXT, lex, line));
-					break;
+					switch (lex) {
+						case "href":
+							tokens.add(new Token(TokensId.HREF, lex, line));
+							break;
+						case "rel":
+							tokens.add(new Token(TokensId.REL, lex, line));
+							break;
+						case "type":
+							tokens.add(new Token(TokensId.TYPE, lex, line));
+							break;
+						default:
+							tokens.add(new Token(TokensId.TEXTO, lex, line));
+							break;
+					}
 				}
 				//System.out.print((char)valor);
 			}
@@ -114,6 +216,14 @@ public class Lexicon {
 		}
 		return new Token (TokensId.EOF,"EOF", line);
 	}	
+	
+	public Token getTokenActual() {
+		if (i < tokens.size() && i > 0) {
+			return tokens.get(i-1);
+		}
+		return new Token (TokensId.EOF,"EOF", line);
+	}	
+	
 	// ++
 	// ++ Operaciones para el Sintactico
 	// ++
@@ -157,6 +267,10 @@ public class Lexicon {
 		//System.out.println(charText);
 	}
 	
+	public void reset () {
+		this.i = 0;
+	}
+	
 	// Devuelde el siguiente caracter de fuente
 	char nextChar() throws IOException{
 		if (charBuffUsed) {
@@ -176,6 +290,11 @@ public class Lexicon {
 
 	// Emite error léxico
 	void errorLexico (String e) {
+		this.hayErrores = true;
 		System.out.println("Error léxico en : "+e);
+	}
+	
+	public boolean hayErrores() {
+		return this.hayErrores;
 	}
 }

@@ -1,42 +1,41 @@
-package simpleCss.main;
+package simpleHtmlMain;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-import simpleCss.ast.AstCss;
-import simpleCss.parser.Lexicon;
-import simpleCss.parser.Parser;
-import simpleCss.parser.Token;
-import simpleCss.parser.TokensId;
-import simpleCss.visitor.BuscaParamCssVisitor;
-import simpleCss.visitor.PrintCssAstVisitor;
+import simpleHtml.ast.Ast;
+import simpleHtml.parser.Lexicon;
+import simpleHtml.parser.Parser;
+import simpleHtml.parser.Token;
+import simpleHtml.parser.TokensId;
+import simpleHtml.visitor.PrintAstVisitor;
+
 
 public class Main {
-
+	
 	public static void main(String[] args) throws FileNotFoundException {
-		FileReader reader = new FileReader("EX1.CSS");
+		FileReader reader = new FileReader("EX4.html");
 		System.out.println("--------------- INICIO LÉXICO ---------------");
 		Lexicon lex = new Lexicon(reader);
 		leerTokens(lex);
 		System.out.println("--------------- FINAL LÉXICO ---------------");
-		System.out.println();
 		System.out.println("--------------- INICIO SINTÁCTICO ---------------");
 		Parser parser = new Parser(lex);
-		AstCss arbolAsst = parser.parse();
+		Ast arbolAsst = parser.parse();
 		System.out.println("--------------- FINAL SINTÁCTICO ---------------");
 		System.out.println();
 		System.out.println("--------------- GENERACIÓN DEL ÁRBOL AST ---------------");
 		if(arbolAsst != null) {
-			PrintCssAstVisitor printVisitor = new PrintCssAstVisitor();
-			String arbol = (String) arbolAsst.accept(printVisitor, null);
+			PrintAstVisitor printVisitor = new PrintAstVisitor();
+			String arbol = (String) arbolAsst.accept(printVisitor, "");
 			System.out.println(arbol);
 			System.out.println();
 			System.out.println("--------------- BÚSQUEDA DE PARÁMETROS ---------------");
-			BuscaParamCssVisitor buscaParam = new BuscaParamCssVisitor();
-			System.out.println(buscaParam.buscar("h1", "color", arbolAsst));
+			//BuscaParamCssVisitor buscaParam = new BuscaParamCssVisitor();
+			//System.out.println(buscaParam.buscar("h1", "color", arbolAsst));
 		}
-		
 	}
+	
 	
 	private static void leerTokens(Lexicon lex) {
 		Token token = lex.getToken();

@@ -8,7 +8,6 @@ import java.util.*;
 public class Parser {
 	
 	private Lexicon lex;
-	private boolean error = false;
 
 	public Parser (Lexicon lex) {
 		this.lex = lex;
@@ -147,7 +146,6 @@ public class Parser {
 		
 	//Gestión de Errores Sintáctico
 	private void errorSintactico (String e, int line) {
-		error = true;
 		System.out.println("Error Sintáctico : "+e+" en la línea "+line);
 	}
 }

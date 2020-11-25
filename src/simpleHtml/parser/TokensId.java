@@ -27,5 +27,8 @@ public enum TokensId {
 	CURSIVAFIN,
 	UNDERLINE,
 	UNDERLINEFIN,
+	TEXTO,
+	CADENA,
+	IGUAL,
 	EOF;
 }

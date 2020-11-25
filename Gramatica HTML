@@ -1,34 +1,38 @@
-GRAMÁTICA HTML:
+GRAMÃ�TICA HTML:
 
-	estructura : HTML head body HTMLFIN
+	programa : HTML head body HTMLFIN
 	
-	head : HEAD etiquetasHead + HEADFIN
+	head : HEAD title link HEADFIN
 	
-	etiquetasHead : TITLE texto TITLEFIN | link*
-	
-	texto : palabra *
-	
-	palabra : [a-zA-Z0-1.,;/]+
-	
+	title : TITLE TEXTO* TITLEFIN
+			
 	link : LINK atributosLink+ MAYOR
 	
 	atributosLink : href | rel | type
 	
-	href : HREF palabra
+	href : HREF IGUAL CADENA
 	
-	rel : REL palabra
+	rel : REL IGUAL CADENA
 	
-	type : TYPE palabra
+	type : TYPE IGUAL CADENA
 	
-	body : BODY etiqueta* BODYFIN
+	body : BODY etiquetasBody* BODYFIN
 	
-	etiqueta : cabecera1 | cabecera2 | parrafo
+	etiquetasBody : h1 | h2 | p
 	
-	cabecera1 : H1 texto H1FIN
+	h1 : H1 atributosBody* H1FIN
 	
-	cabecera2 : H2 texto H2FIN
+	h2 : H2 atributosBody* H2FIN
 	
-	parrafo : P texto PFIN
+	p : P atributosBody* PFIN
+	
+	atributosBody : TEXTO | negrita | cursiva | underline
+		
+	negrita : NEGRITA TEXTO* NEGRITAFIN
+	
+	cursiva : CURSIVA TEXTO* CURSIVAFIN
+	
+	underline : UNDERLINE TEXTO* UNDERLINEFIN
 			
 	HTML : '<html>'
 	HTMLFIN : '</html>'
@@ -37,9 +41,10 @@ GRAMÁTICA HTML:
 	TITLE : '<title>'
 	TITLEFIN : '</title>'
 	LINK : '<link'
-	HREF : 'href='
-	REL : 'rel='
-	TYPE : 'type='
+	HREF : 'href'
+	REL : 'rel'
+	TYPE : 'type'
+	IGUAL : '='
 	BODY : '<body>'
 	BODYFIN : '</body>'
 	H1 : '<h1>'
@@ -55,5 +60,7 @@ GRAMÁTICA HTML:
 	CURSIVAFIN : '</i>'
 	UNDERLINE : '<u>'
 	UNDERLINEFIN : '</u>'
+	CADENA : "[a-zA-Z0-1.,;/]+"
+	TEXTO : [a-zA-Z0-1.,;/]*
 	
 	

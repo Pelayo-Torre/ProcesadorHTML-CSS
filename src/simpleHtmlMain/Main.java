@@ -8,6 +8,7 @@ import simpleHtml.parser.Lexicon;
 import simpleHtml.parser.Parser;
 import simpleHtml.parser.Token;
 import simpleHtml.parser.TokensId;
+import simpleHtml.visitor.BuscaCssVisitor;
 import simpleHtml.visitor.PrintAstVisitor;
 
 
@@ -30,9 +31,10 @@ public class Main {
 			String arbol = (String) arbolAsst.accept(printVisitor, "");
 			System.out.println(arbol);
 			System.out.println();
-			System.out.println("--------------- BÚSQUEDA DE PARÁMETROS ---------------");
-			//BuscaParamCssVisitor buscaParam = new BuscaParamCssVisitor();
-			//System.out.println(buscaParam.buscar("h1", "color", arbolAsst));
+			System.out.println("--------------- BÚSQUEDA DE CSS ---------------");
+			BuscaCssVisitor buscaCss = new BuscaCssVisitor();
+			String css = (String) arbolAsst.accept(buscaCss, null);
+			System.out.println("EL CSS encontrado es : " + css);
 		}
 	}
 	

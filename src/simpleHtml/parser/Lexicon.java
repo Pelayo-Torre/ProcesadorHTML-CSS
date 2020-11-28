@@ -256,7 +256,7 @@ public class Lexicon {
 	
 	// Carga el conjunto de caracteres adminidos pro el analizador lÈxico
 	void loadSet () {
-		String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:+-*/()[]!?";
+		String s = "·ÈÌÛ˙¡…Õ”⁄ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,;:+-*/()[]!?";
 		int i=0;
 		Character a = new Character('a');
 		while (i < s.length()) {

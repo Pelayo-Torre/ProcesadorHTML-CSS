@@ -163,6 +163,21 @@ public class RenderVisitor implements Visitor{
 		return generateFormattedText(param, "bold", p.textos);
 	}
 	
+	@Override
+	public Object visit(Underline p, Object param) {
+		return generateFormattedText(param, "underline", p.textos);
+	}
+
+	@Override
+	public Object visit(Cursiva p, Object param) {
+		return generateFormattedText(param, "italic", p.textos);
+	}
+
+	@Override
+	public Object visit(Cadena p, Object param) {
+		return null;
+	}
+	
 	private FormattedText generateFormattedText(Object param, String estilo, List<Texto> textos) {
 		String s = (String) param;
 		String color = buscaParamCss.buscar(s, "color", css);
@@ -182,23 +197,7 @@ public class RenderVisitor implements Visitor{
 		for(Texto texto : textos) {
 			text += (String) texto.accept(this, null) + " ";
 		}
-		FormattedText formattedText = new FormattedText(text.substring(0, text.length()-1), color, font_size, estilo);
-		return formattedText;
-	}
-
-	@Override
-	public Object visit(Underline p, Object param) {
-		return generateFormattedText(param, "underline", p.textos);
-	}
-
-	@Override
-	public Object visit(Cursiva p, Object param) {
-		return generateFormattedText(param, "italic", p.textos);
-	}
-
-	@Override
-	public Object visit(Cadena p, Object param) {
-		return null;
+		return new FormattedText(text.substring(0, text.length()-1), color, font_size, estilo);
 	}
 
 }

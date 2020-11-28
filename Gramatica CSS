@@ -1,4 +1,4 @@
-GRAMÁTICA CSS:
+GRAMÃ�TICA CSS:
 
 	programa : bloque +
 	
@@ -10,12 +10,10 @@ GRAMÁTICA CSS:
 	
 	clave : COLOR | FONT_SIZE | TEXT_ALIGN | FONT_STYLE
 	
-	valor : color | size | aligment | fstyle
+	valor : color | SIZE | aligment | fstyle
 	
 	color : BLACK | WHITE | YELLOW | RED | BLUE | GREEN
-	
-	size : SIZE PIXEL
-	
+		
 	aligment : LEFT | RIGHT | CENTER
 	
 	fstyle : BOLD | NORMAL | UNDERLINE | ITALIC 
@@ -37,7 +35,6 @@ GRAMÁTICA CSS:
 	GREEN : 'green'
 	YELLOW : 'yellow'
 	RED : 'red'
-	PIXEL : 'px'
 	LEFT : 'left'
 	RIGHT : 'right'
 	CENTER : 'center'
@@ -45,7 +42,7 @@ GRAMÁTICA CSS:
 	NORMAL : 'normal'
 	UNDERLINE : 'underline'
 	ITALIC : 'italic'
-	SIZE : [0-9]+
+	SIZE : [0-9]+'px'
 	
 	
 	

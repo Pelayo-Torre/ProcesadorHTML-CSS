@@ -19,7 +19,6 @@ public enum TokensId {
 	WHITE,
 	YELLOW,
 	RED,
-	PIXEL,
 	LEFT,
 	RIGHT,
 	CENTER,

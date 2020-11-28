@@ -98,9 +98,6 @@ public class Lexicon {
 								case "green" :
 									tokens.add(new Token(TokensId.GREEN, ident, line));
 									break;
-								case "px" :
-									tokens.add(new Token(TokensId.PIXEL, ident, line));
-									break;
 								case "left" :
 									tokens.add(new Token(TokensId.LEFT, ident, line));
 									break;
@@ -175,7 +172,7 @@ public class Lexicon {
 			if (valor == 'x') {
 				lexReturned = lexReturned+(valor);
 			} else {
-				errorLexico ("Encontrado "+lexReturned+". Se esperada un token SIZE.");
+				errorLexico ("Encontrado "+lexReturned+". Se esperada un token SIZE. en la línea " + line );
 				return null;
 			}
 		}

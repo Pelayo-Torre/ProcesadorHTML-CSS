@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import simpleHtml.ast.Ast;
-import simpleHtml.parser.Lexicon;
-import simpleHtml.parser.Parser;
+import simpleHtml.parser.LexiconHTML;
+import simpleHtml.parser.ParserHTML;
 import simpleHtml.parser.Token;
 import simpleHtml.parser.TokensId;
 import simpleHtml.visitor.BuscaCssVisitor;
@@ -17,11 +17,11 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
 		FileReader reader = new FileReader("EX4.html");
 		System.out.println("--------------- INICIO LÉXICO ---------------");
-		Lexicon lex = new Lexicon(reader);
+		LexiconHTML lex = new LexiconHTML(reader);
 		leerTokens(lex);
 		System.out.println("--------------- FINAL LÉXICO ---------------");
 		System.out.println("--------------- INICIO SINTÁCTICO ---------------");
-		Parser parser = new Parser(lex);
+		ParserHTML parser = new ParserHTML(lex);
 		Ast arbolAsst = parser.parse();
 		System.out.println("--------------- FINAL SINTÁCTICO ---------------");
 		System.out.println();
@@ -39,7 +39,7 @@ public class Main {
 	}
 	
 	
-	private static void leerTokens(Lexicon lex) {
+	private static void leerTokens(LexiconHTML lex) {
 		Token token = lex.getToken();
 		while(token.getToken() != TokensId.EOF) {
 			System.out.println(token);

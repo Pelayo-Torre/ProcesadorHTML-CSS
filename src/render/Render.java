@@ -1,13 +1,11 @@
-package simpleHtml.visitor;
+package render;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import render.FormattedLine;
-import render.FormattedPage;
-import render.FormattedText;
 import simpleCss.ast.AstCss;
 import simpleCss.visitor.BuscaParamCssVisitor;
+import simpleHtml.ast.A;
 import simpleHtml.ast.AtributosBody;
 import simpleHtml.ast.Body;
 import simpleHtml.ast.Cadena;
@@ -17,6 +15,7 @@ import simpleHtml.ast.H1;
 import simpleHtml.ast.H2;
 import simpleHtml.ast.Head;
 import simpleHtml.ast.Href;
+import simpleHtml.ast.HrefA;
 import simpleHtml.ast.Link;
 import simpleHtml.ast.Negrita;
 import simpleHtml.ast.P;
@@ -26,14 +25,15 @@ import simpleHtml.ast.Texto;
 import simpleHtml.ast.Title;
 import simpleHtml.ast.Type;
 import simpleHtml.ast.Underline;
+import simpleHtml.visitor.Visitor;
 
-public class RenderVisitor implements Visitor{
+public class Render implements Visitor{
 	
 	private BuscaParamCssVisitor buscaParamCss;
 	private AstCss defaultCss;
 	private AstCss css;
 	
-	public RenderVisitor(BuscaParamCssVisitor buscaParamCss, AstCss defaultCss, AstCss css) {
+	public Render(BuscaParamCssVisitor buscaParamCss, AstCss defaultCss, AstCss css) {
 		this.buscaParamCss = buscaParamCss;
 		this.defaultCss = defaultCss;
 		this.css = css;
@@ -51,7 +51,7 @@ public class RenderVisitor implements Visitor{
 	public Object visit(Body p, Object param) {
 		FormattedPage formattedPage = new FormattedPage();
 		for(EtiquetasBody etiqueta : p.etiquetas)
-			formattedPage.add((FormattedLine) etiqueta.accept(this, null));
+			formattedPage.add((FormattedLine) etiqueta.accept(this, "E"));
 		return formattedPage;
 	}
 
@@ -175,7 +175,32 @@ public class RenderVisitor implements Visitor{
 
 	@Override
 	public Object visit(Cadena p, Object param) {
-		return null;
+		return p.valor;
+	}
+	
+	@Override
+	public Object visit(A p, Object param) {
+		if("E".equals(param)) {
+			String align = buscaParamCss.buscar("a", "text-align", css);
+			if(align == null)
+				align = buscaParamCss.buscar("a", "text-align", defaultCss);
+			FormattedLine formattedLine = new FormattedLine(align);
+			
+			FormattedText ft = generateFormattedText("a", null, p.textos);
+			ft.getPropiedades().put("href", (String) p.href.accept(this, null));
+			formattedLine.add(ft);
+			return formattedLine;
+		}
+		else {
+			FormattedText ft = generateFormattedText("a", null, p.textos);
+			ft.getPropiedades().put("href", (String) p.href.accept(this, null));
+			return ft;
+		}
+	}
+
+	@Override
+	public Object visit(HrefA p, Object param) {
+		return (String) p.cadena.accept(this, param);
 	}
 	
 	private FormattedText generateFormattedText(Object param, String estilo, List<Texto> textos) {

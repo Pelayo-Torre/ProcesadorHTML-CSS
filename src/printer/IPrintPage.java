@@ -1,4 +1,4 @@
-package paint;
+package printer;
 
 import render.FormattedPage;
 

@@ -1,4 +1,6 @@
-package paint;
+package printer;
+
+import java.util.Map;
 
 import render.FormattedLine;
 import render.FormattedPage;
@@ -22,8 +24,18 @@ public class PrintPageTxt implements IPrintPage{
 	}
 	
 	private void printText(FormattedText ft) {
-		System.out.println("(Format : " + ft.getColor() + ", " + ft.getTamano() + 
-				", " + ft.getEstilo() + " | Metrics : " + ft.metric() + " >> " + ft.getTexto() + ")");
+		if(ft.getPropiedades().isEmpty()) {
+			System.out.println("(Format : " + ft.getColor() + ", " + ft.getTamano() + 
+					", " + ft.getEstilo() + " | Metrics : " + ft.metric() + " >> " + ft.getTexto() + ")");
+		}
+		else {
+			System.out.println("(Format : " + ft.getColor() + ", " + ft.getTamano() + 
+					", " + ft.getEstilo() + " | Metrics : " + ft.metric() + " >> " + ft.getTexto() + " | Propiedades: ");
+			for (Map.Entry<String, String> entry : ft.getPropiedades().entrySet()) {
+			    System.out.print("\t" + entry.getKey() + " = " + entry.getValue() + "");
+			}
+			System.out.print(")\n");
+		}
 	}
 
 }

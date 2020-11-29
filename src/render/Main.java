@@ -1,6 +1,6 @@
 package render;
 
-import paint.*;
+import printer.*;
 
 public class Main {
 

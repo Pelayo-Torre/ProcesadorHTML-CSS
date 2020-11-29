@@ -1,11 +1,15 @@
 package render;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FormattedText {
 	
 	private String texto;
 	private String color;
 	private double tamano;
 	private String estilo;
+	private Map<String, String> propiedades = new HashMap<String, String>();
 	
 	public FormattedText(String texto, String color, double tamano, String estilo) {
 		this.texto = texto;
@@ -50,6 +54,10 @@ public class FormattedText {
 		if(this.texto != null)
 			return this.tamano * this.texto.trim().length();
 		return 0.0;
+	}
+
+	public Map<String, String> getPropiedades() {
+		return propiedades;
 	}
 
 }

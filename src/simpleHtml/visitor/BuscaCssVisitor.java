@@ -1,5 +1,6 @@
 package simpleHtml.visitor;
 
+import simpleHtml.ast.A;
 import simpleHtml.ast.AtributosLink;
 import simpleHtml.ast.Body;
 import simpleHtml.ast.Cadena;
@@ -8,6 +9,7 @@ import simpleHtml.ast.H1;
 import simpleHtml.ast.H2;
 import simpleHtml.ast.Head;
 import simpleHtml.ast.Href;
+import simpleHtml.ast.HrefA;
 import simpleHtml.ast.Link;
 import simpleHtml.ast.Negrita;
 import simpleHtml.ast.P;
@@ -101,6 +103,16 @@ public class BuscaCssVisitor implements Visitor{
 	@Override
 	public Object visit(Cadena p, Object param) {
 		return p.valor;
+	}
+
+	@Override
+	public Object visit(HrefA p, Object param) {
+		return null;
+	}
+
+	@Override
+	public Object visit(A p, Object param) {
+		return null;
 	}
 
 }

@@ -18,3 +18,10 @@ p {
   text-align: left;
   font-style: normal;
 }
+
+a{
+	color: blue;
+	font-style: underline;
+	font-size: 18px;
+	text-align: left;
+}

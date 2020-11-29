@@ -40,7 +40,4 @@ public class FormattedLine {
 	public void setFormattedTexts(List<FormattedText> formattedTexts) {
 		this.formattedTexts = formattedTexts;
 	}
-	
-	
-
 }

@@ -5,11 +5,11 @@ import java.util.List;
 import simpleHtml.ast.*;
 import java.util.*;
 
-public class Parser {
+public class ParserHTML {
 	
-	private Lexicon lex;
+	private LexiconHTML lex;
 	
-	public Parser (Lexicon lex) {
+	public ParserHTML (LexiconHTML lex) {
 		this.lex = lex;
 		this.lex.reset();
 	}
@@ -141,7 +141,7 @@ public class Parser {
 		
 		tok = lex.getToken();
 		List<EtiquetasBody> etiquetasBody = new ArrayList<EtiquetasBody>();
-		while((tok.token == TokensId.H1) || (tok.token == TokensId.H2) || (tok.token == TokensId.P)) {
+		while((tok.token == TokensId.H1) || (tok.token == TokensId.H2) || (tok.token == TokensId.P) || (tok.token == TokensId.A)) {
 			EtiquetasBody etiqueta = obtenerEtiqueta(tok);
 			if(etiqueta != null)
 				etiquetasBody.add(etiqueta);
@@ -173,8 +173,13 @@ public class Parser {
 				if(!lex.getTokenActual().getToken().equals(TokensId.PFIN))
 					errorSintactico("Se esperaba '</p>' y se ha encontrado " + lex.getTokenActual().getLexeme(), lex.getTokenActual().getLine());
 				return p;
+			case A:
+				A a = crearEnlace();
+				if(!lex.getTokenActual().getToken().equals(TokensId.AFIN))
+					errorSintactico("Se esperaba '</a>' y se ha encontrado " + lex.getTokenActual().getLexeme(), lex.getTokenActual().getLine());
+				return a;
 			default:
-				errorSintactico("Se esperaba '<h1> o <h2> o <p>' y se ha encontrado " + token.getLexeme(), token.getLine());
+				errorSintactico("Se esperaba '<h1> o <h2> o <p> o <a>' y se ha encontrado " + token.getLexeme(), token.getLine());
 				return null;
 		}
 	}
@@ -183,7 +188,8 @@ public class Parser {
 		Token tok = lex.getToken();
 		
 		List<AtributosBody> atributos = new ArrayList<AtributosBody>();
-		while((tok.token == TokensId.TEXTO) || (tok.token == TokensId.CURSIVA) || (tok.token == TokensId.NEGRITA) || (tok.token == TokensId.UNDERLINE)) {
+		while((tok.token == TokensId.TEXTO) || (tok.token == TokensId.CURSIVA) || (tok.token == TokensId.NEGRITA) 
+				|| (tok.token == TokensId.UNDERLINE) || (tok.token == TokensId.A)) {
 			AtributosBody atributo = obtenerAtributoBody(tok);
 			if(atributo != null)
 				atributos.add(atributo);
@@ -191,6 +197,41 @@ public class Parser {
 		}
 		
 		return atributos;
+	}	
+
+	private A crearEnlace() {
+		HrefA href = null;
+		
+		Token tok = lex.getToken();
+		if(!tok.token.equals(TokensId.HREF)) {
+			errorSintactico("Se esperaba 'href' y se ha encontrado " + tok.getLexeme(), tok.getLine());
+		}
+		
+		tok = lex.getToken();
+		if(!tok.token.equals(TokensId.IGUAL)) {
+			errorSintactico("Se esperaba '=' y se ha encontrado " + tok.getLexeme(), tok.getLine());
+		}
+
+		tok = lex.getToken();
+		if(!tok.token.equals(TokensId.CADENA)) {
+			errorSintactico("Se esperaba 'CADENA' y se ha encontrado " + tok.getLexeme(), tok.getLine());
+		}
+		else {
+			href = new HrefA(new Cadena(tok.lexeme));
+		}
+		
+		List<Texto> textos = new ArrayList<Texto>();
+		tok = lex.getToken();
+		if(!tok.token.equals(TokensId.MAYOR)) {
+			errorSintactico("Se esperaba '>' y se ha encontrado " + tok.getLexeme(), tok.getLine());
+		}
+		
+		tok = lex.getToken();
+		while((tok.token == TokensId.TEXTO)) {
+			textos.add(new Texto(tok.lexeme));
+			tok = lex.getToken();
+		}
+		return new A(href, textos);
 	}
 	
 	private AtributosBody obtenerAtributoBody(Token tok) {
@@ -212,6 +253,11 @@ public class Parser {
 				if(!lex.getTokenActual().getToken().equals(TokensId.NEGRITAFIN))
 					errorSintactico("Se esperaba '</b>' y se ha encontrado " + lex.getTokenActual().getLexeme(), lex.getTokenActual().getLine());
 				return negrita;
+			case A:
+				A a = crearEnlace();
+				if(!lex.getTokenActual().getToken().equals(TokensId.AFIN))
+					errorSintactico("Se esperaba '</a>' y se ha encontrado " + lex.getTokenActual().getLexeme(), lex.getTokenActual().getLine());
+				return a;
 			default:
 				errorSintactico("Se esperaba 'texto o <i> o <b> o <u>' y se ha encontrado " + tok.getLexeme(), tok.getLine());
 				return null;

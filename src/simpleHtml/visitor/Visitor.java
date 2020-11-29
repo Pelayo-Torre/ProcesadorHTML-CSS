@@ -20,4 +20,6 @@ public interface Visitor {
 	Object visit(Underline p, Object param);
 	Object visit(Cursiva p, Object param);
 	Object visit(Cadena p, Object param);
+	Object visit(A p, Object param);
+	Object visit(HrefA p, Object param);
 }

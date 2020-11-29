@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.util.*;
 import java.io.*;
 
-public class Lexicon {
+public class LexiconHTML {
 
 	// Gestión de tokens
 	private List<Token> tokens = new ArrayList<Token>();
@@ -18,7 +18,7 @@ public class Lexicon {
 	
 	HashSet<Character> charText = new HashSet<Character>();
 	
-	public Lexicon (FileReader f) {
+	public LexiconHTML (FileReader f) {
 		/*
 		tokens.add(new Token(TokensId.HTML, "<html>"));
 		tokens.add(new Token(TokensId.HTMLCLOSE, "</html>"));
@@ -86,6 +86,13 @@ public class Lexicon {
 							else
 								errorLexico(lex);
 							break;
+						case 'a':
+							lex = getLexeme ("</a",'>');
+							if (lex.equals("</a>"))
+								tokens.add(new Token(TokensId.AFIN, lex, line));
+							else
+								errorLexico(lex);
+							break;
 						default:
 							errorLexico(getLexeme("<"+valor, '>'));
 						}
@@ -96,6 +103,13 @@ public class Lexicon {
 							lex = getLexeme ("<l",'k');
 							if (lex.equals("<link"))
 								tokens.add(new Token(TokensId.LINK, lex, line));
+							else
+								errorLexico(lex);
+							break;
+						case 'a':
+							lex = getLexeme ("<a",' ');
+							if (lex.equals("<a "))
+								tokens.add(new Token(TokensId.A, lex, line));
 							else
 								errorLexico(lex);
 							break;

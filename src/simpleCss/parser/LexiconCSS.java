@@ -4,7 +4,7 @@ import java.io.FileReader;
 import java.util.*;
 import java.io.*;
 
-public class Lexicon {
+public class LexiconCSS {
 
 	// Gestión de tokens
 	private List<Token> tokens = new ArrayList<Token>();
@@ -18,7 +18,7 @@ public class Lexicon {
 	
 	HashSet<Character> charText = new HashSet<Character>();
 	
-	public Lexicon (FileReader f) {
+	public LexiconCSS (FileReader f) {
 		filereader = f;
 		//String lex;
 		try{
@@ -67,6 +67,9 @@ public class Lexicon {
 									break;
 								case "p" :
 									tokens.add(new Token(TokensId.P, ident, line));
+									break;
+								case "a" :
+									tokens.add(new Token(TokensId.A, ident, line));
 									break;
 								case "color" :
 									tokens.add(new Token(TokensId.COLOR, ident, line));

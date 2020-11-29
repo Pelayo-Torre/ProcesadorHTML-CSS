@@ -30,5 +30,7 @@ public enum TokensId {
 	TEXTO,
 	CADENA,
 	IGUAL,
+	A,
+	AFIN,
 	EOF;
 }

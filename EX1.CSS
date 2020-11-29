@@ -1,18 +1,25 @@
 h1 {
-  color: yellow;
+  color: black;
   font-size: 32px;
-  text-align: left;
-  font-style: bold;
+  text-align: center;
+  font-style: italic;
 }
  
 h2 {
-  color: white;
+  color: blue;
   font-size: 18px;
   font-style: italic;
 }
  
 p {
   color: green;
-  text-align: right;
-  font-size: 12px;
+  text-align: left;
+  font-style: normal;
+}
+
+a{
+  color: yellow;
+  font-style: normal;
+  font-size: 25px;
+  text-align: left;
 }

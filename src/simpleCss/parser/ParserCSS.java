@@ -3,13 +3,15 @@ package simpleCss.parser;
 import java.util.List;
 
 import simpleCss.ast.*;
+
+
 import java.util.*;
 
-public class Parser {
+public class ParserCSS {
 	
-	private Lexicon lex;
+	private LexiconCSS lex;
 
-	public Parser (Lexicon lex) {
+	public ParserCSS (LexiconCSS lex) {
 		this.lex = lex;
 		this.lex.reset();
 	}
@@ -26,7 +28,7 @@ public class Parser {
 	private List<Bloque> parseBloque() {
 		List<Bloque> bloques = new ArrayList<Bloque>();
 		Token tok = lex.getToken();
-		while ((tok.token == TokensId.H1) || (tok.token == TokensId.H2) || (tok.token == TokensId.P)) {
+		while ((tok.token == TokensId.H1) || (tok.token == TokensId.H2) || (tok.token == TokensId.P) || (tok.token == TokensId.A)) {
 			Token ident = tok;
 			tok = lex.getToken();
 			
@@ -39,6 +41,12 @@ public class Parser {
 				errorSintactico("Se esperaba '{' y se ha encontrado " + tok.getLexeme(), tok.getLine());
 			}
 		}
+		
+		tok = lex.getToken();
+		if (!tok.getToken().equals(TokensId.EOF)) {
+			errorSintactico ("Encontrado "+tok.getLexeme()+". Se esperaba el final del fichero", tok.getLine());
+		}
+		
 		return bloques;
 	}
 	

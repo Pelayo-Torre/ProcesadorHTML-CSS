@@ -9,6 +9,7 @@ public enum TokensId {
 	P,
 	H1,
 	H2,
+	A,
 	COLOR,
 	FONT_SIZE,
 	TEXT_ALIGN,

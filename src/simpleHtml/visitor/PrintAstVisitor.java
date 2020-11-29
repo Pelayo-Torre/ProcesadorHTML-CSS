@@ -1,5 +1,6 @@
 package simpleHtml.visitor;
 
+import simpleHtml.ast.A;
 import simpleHtml.ast.AtributosBody;
 import simpleHtml.ast.AtributosLink;
 import simpleHtml.ast.Body;
@@ -10,6 +11,7 @@ import simpleHtml.ast.H1;
 import simpleHtml.ast.H2;
 import simpleHtml.ast.Head;
 import simpleHtml.ast.Href;
+import simpleHtml.ast.HrefA;
 import simpleHtml.ast.Link;
 import simpleHtml.ast.Negrita;
 import simpleHtml.ast.P;
@@ -162,5 +164,23 @@ public class PrintAstVisitor implements Visitor{
 		return s;
 	}
 
+
+	@Override
+	public Object visit(HrefA p, Object param) {
+		String s = (String) param + " -> HREF";
+		s = s + p.cadena.accept(this, (String)param+sp) + "\n";
+		return s;
+	}
+
+	@Override
+	public Object visit(A p, Object param) {
+		String s= (String) param + "(a\n";
+		s += (String) p.href.accept(this,(String)param+sp)+"\n";
+		for(Texto t : p.textos) {
+			s += t.accept(this, (String)param+sp);
+		}
+		s = s + "\n" + (String) param + ")";
+		return s;
+	}
 
 }

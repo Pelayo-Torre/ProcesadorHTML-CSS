@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import simpleCss.ast.AstCss;
-import simpleCss.parser.Lexicon;
-import simpleCss.parser.Parser;
+import simpleCss.parser.LexiconCSS;
+import simpleCss.parser.ParserCSS;
 import simpleCss.parser.Token;
 import simpleCss.parser.TokensId;
 import simpleCss.visitor.BuscaParamCssVisitor;
@@ -16,12 +16,12 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
 		FileReader reader = new FileReader("EX1.CSS");
 		System.out.println("--------------- INICIO LÉXICO ---------------");
-		Lexicon lex = new Lexicon(reader);
+		LexiconCSS lex = new LexiconCSS(reader);
 		leerTokens(lex);
 		System.out.println("--------------- FINAL LÉXICO ---------------");
 		System.out.println();
 		System.out.println("--------------- INICIO SINTÁCTICO ---------------");
-		Parser parser = new Parser(lex);
+		ParserCSS parser = new ParserCSS(lex);
 		AstCss arbolAsst = parser.parse();
 		System.out.println("--------------- FINAL SINTÁCTICO ---------------");
 		System.out.println();
@@ -38,7 +38,7 @@ public class Main {
 		
 	}
 	
-	private static void leerTokens(Lexicon lex) {
+	private static void leerTokens(LexiconCSS lex) {
 		Token token = lex.getToken();
 		while(token.getToken() != TokensId.EOF) {
 			System.out.println(token);

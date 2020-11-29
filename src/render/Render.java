@@ -187,13 +187,31 @@ public class Render implements Visitor{
 			FormattedLine formattedLine = new FormattedLine(align);
 			
 			FormattedText ft = generateFormattedText("a", null, p.textos);
-			ft.getPropiedades().put("href", (String) p.href.accept(this, null));
+			if(p.href != null) {
+				Object s = p.href.accept(this, null);
+				if(s != null)
+					ft.getPropiedades().put("href", (String)s);
+				else
+					ft.getPropiedades().put("href", "");
+			}
+			else {
+				ft.getPropiedades().put("href", "");
+			}
 			formattedLine.add(ft);
 			return formattedLine;
 		}
 		else {
 			FormattedText ft = generateFormattedText("a", null, p.textos);
-			ft.getPropiedades().put("href", (String) p.href.accept(this, null));
+			if(p.href != null) {
+				Object s = p.href.accept(this, null);
+				if(s != null)
+					ft.getPropiedades().put("href", (String)s);
+				else
+					ft.getPropiedades().put("href", "");
+			}
+			else {
+				ft.getPropiedades().put("href", "");
+			}
 			return ft;
 		}
 	}
@@ -222,6 +240,8 @@ public class Render implements Visitor{
 		for(Texto texto : textos) {
 			text += (String) texto.accept(this, null) + " ";
 		}
+		if("".equals(text))
+			return new FormattedText(text, color, font_size, estilo);
 		return new FormattedText(text.substring(0, text.length()-1), color, font_size, estilo);
 	}
 
